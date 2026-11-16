@@ -1,5 +1,8 @@
 import crypto from "crypto";
 import { markPaid } from "@/lib/orders";
+
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   const body = await req.text();
   const hash = crypto.createHmac("sha512", process.env.PAYSTACK_SECRET_KEY!).update(body).digest("hex");

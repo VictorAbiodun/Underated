@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { admin } from "@/lib/supabase-admin";
 import { shippingFor } from "@/lib/shipping";
+
+export const dynamic = "force-dynamic";
+
 type In = { handle: string; size: string; qty: number };
 export async function POST(req: Request) {
   const { name, email, phone, address, state: st, items } = await req.json();
