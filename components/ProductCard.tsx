@@ -18,7 +18,7 @@ export default function ProductCard({ p }: { p: Product }) {
       {/* ── 4:5 Portrait Studio Image Container (bolapsd style) ── */}
       <Link
         href={`/products/${p.handle}`}
-        className="relative block aspect-[4/5] w-full overflow-hidden bg-[#121212] transition-colors"
+        className="relative block aspect-[4/5] w-full overflow-hidden bg-white transition-colors rounded-[2px]"
         aria-label={p.title}
       >
         {/* Front Image */}
@@ -31,11 +31,11 @@ export default function ProductCard({ p }: { p: Product }) {
           className={`object-cover object-center transition-all duration-500 ${
             backImage
               ? "group-hover:opacity-0"
-              : "group-hover:scale-[1.04]"
+              : "group-hover:scale-[1.05]"
           }`}
         />
 
-        {/* Back / Hover Image (if available) */}
+        {/* Back / Alternate Model View (Hover Swap) */}
         {backImage && (
           <Image
             src={backImage}
@@ -47,9 +47,9 @@ export default function ProductCard({ p }: { p: Product }) {
           />
         )}
 
-        {/* Sold out overlay tag */}
+        {/* Sold out badge */}
         {isSoldOut && (
-          <span className="absolute left-2 top-2 bg-black/85 px-2 py-1 text-[9px] font-bold tracking-widest text-white backdrop-blur-sm">
+          <span className="absolute left-2.5 top-2.5 bg-black/90 px-2 py-1 text-[9px] font-bold tracking-widest text-white backdrop-blur-sm">
             SOLD OUT
           </span>
         )}
@@ -59,7 +59,7 @@ export default function ProductCard({ p }: { p: Product }) {
       <div className="flex flex-col gap-1 px-0.5">
         <Link
           href={`/products/${p.handle}`}
-          className="text-[11px] font-semibold uppercase leading-tight tracking-tight text-white/90 hover:text-white md:text-xs"
+          className="text-[11px] font-semibold uppercase leading-tight tracking-tight text-white/95 hover:text-white md:text-xs"
         >
           {p.title}
         </Link>

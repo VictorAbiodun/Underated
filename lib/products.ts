@@ -21,10 +21,97 @@ export const naira = (n: number) =>
   }).format(n);
 
 /**
- * Curated catalog of all brand pieces.
- * Used as source of truth and instant fallback so requests are never blocked.
+ * Headline 8 Drop Pieces for UNDERATED Storefront
  */
 export const DEFAULT_PRODUCTS: Product[] = [
+  {
+    id: "underated-timeless-blue",
+    handle: "underated-timeless-blue",
+    title: "Timeless Tee (Blue)",
+    price_ngn: 48000,
+    details:
+      "Mineral wash indigo blue heavyweight 240 GSM cotton tee featuring signature airbrushed woman profile stipple graphic on chest and lower UNDERATED branding. Boxy streetwear drape.",
+    images: ["/products/timeless-blue.webp"],
+    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
+    collection: "tees",
+  },
+  {
+    id: "underated-armed",
+    handle: "underated-armed",
+    title: "Armed Camo Tee",
+    price_ngn: 45000,
+    details:
+      "Heavyweight 240 GSM combed cotton tee in jet black featuring military woodland camouflage UNDERATED lettering across chest. Relaxed boxy streetwear fit as seen in the lookbook.",
+    images: ["/products/armed-camo.webp", "/slide-7.webp"],
+    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
+    collection: "tees",
+  },
+  {
+    id: "underated-dangerous",
+    handle: "underated-dangerous",
+    title: "Dangerous Pink Camo Tee",
+    price_ngn: 45000,
+    details:
+      "Optic white heavyweight combed cotton tee with razor-sharp pink camo UNDERATED chest insignia. Signature boxy silhouette with reinforced ribbed collar as seen in the lookbook.",
+    images: ["/products/dangerous-pink-camo.webp", "/slide-8.webp"],
+    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
+    collection: "tees",
+  },
+  {
+    id: "underated-state",
+    handle: "underated-state",
+    title: "Underated State Tee",
+    price_ngn: 45000,
+    details:
+      "Jet black heavyweight 240 GSM cotton tee featuring distressed industrial block stencil UNDERATED lettering across chest. Clean essential streetwear staple.",
+    images: ["/products/state-logo.webp"],
+    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
+    collection: "tees",
+  },
+  {
+    id: "underated-highway-piece",
+    handle: "underated-highway-piece",
+    title: "Highway Piece Tee",
+    price_ngn: 48000,
+    details:
+      "Heavyweight boxy cotton tee featuring monumental architectural stipple artwork of the iconic Lekki-Ikoyi cable bridge with right sleeve RATED signature hit.",
+    images: ["/products/highway-piece.webp"],
+    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
+    collection: "tees",
+  },
+  {
+    id: "underated-street-swag",
+    handle: "underated-street-swag",
+    title: "Street Swag Jersey",
+    price_ngn: 55000,
+    details:
+      "Sublimated technical mesh football jersey with knit polo collar, V-neck insert, URD badge, Lagos NG insignia, and FLY ASF / SWAG sleeve graphics.",
+    images: ["/products/street-swag.webp"],
+    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
+    collection: "jerseys",
+  },
+  {
+    id: "underated-cuffs",
+    handle: "underated-cuffs",
+    title: "Underated Cuffs Longsleeve",
+    price_ngn: 52000,
+    details:
+      "Layered double-sleeve tee featuring heavy black tee body with gothic tribal UNDERATED chrome chest logo and contrast white long sleeves with full sleeve tribal graphics.",
+    images: ["/products/cuffs-longsleeve.webp"],
+    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
+    collection: "longsleeves",
+  },
+  {
+    id: "underated-timeless-black",
+    handle: "underated-timeless-black",
+    title: "Timeless Tee (Black)",
+    price_ngn: 48000,
+    details:
+      "Vintage washed charcoal black 240 GSM heavy combed cotton tee. Subtle acid wash patina with iconic airbrushed profile stipple graphics.",
+    images: ["/products/timeless-black.webp"],
+    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
+    collection: "tees",
+  },
   {
     id: "comic-burst-tee",
     handle: "comic-burst-tee",
@@ -33,39 +120,6 @@ export const DEFAULT_PRODUCTS: Product[] = [
     details:
       "Heavyweight 250 GSM premium cotton tee featuring high-density explosive comic UNDERATED graphics on chest. Drop shoulder oversized streetwear fit with reinforced ribbed collar.",
     images: ["/slide-6.webp"],
-    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
-    collection: "tees",
-  },
-  {
-    id: "camo-logo-tee",
-    handle: "camo-logo-tee",
-    title: "Camo Boxy Tee",
-    price_ngn: 45000,
-    details:
-      "Heavyweight 240 GSM combed cotton featuring vintage woodland camo UNDERATED lettering across chest. Relaxed boxy silhouette tailored for everyday streetwear wear.",
-    images: ["/slide-7.webp"],
-    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
-    collection: "tees",
-  },
-  {
-    id: "pink-camo-tee",
-    handle: "pink-camo-tee",
-    title: "Pink Camo Boxy Tee",
-    price_ngn: 45000,
-    details:
-      "Clean optic white tee with razor-sharp pink camo UNDERATED chest print. Signature boxy cut with reinforced collar and twin-needle hem stitching.",
-    images: ["/slide-8.webp"],
-    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
-    collection: "tees",
-  },
-  {
-    id: "star-burn-tee",
-    handle: "star-burn-tee",
-    title: "Star Burn Graphic Tee",
-    price_ngn: 48000,
-    details:
-      "Mineral wash black heavy cotton boxy tee. Features 'To become a star, you must burn' celestial stipple graphic on front with signature star back print.",
-    images: ["/star-burn-tee.jpg"],
     sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
     collection: "tees",
   },
@@ -80,34 +134,12 @@ export const DEFAULT_PRODUCTS: Product[] = [
     sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
     collection: "hoodies",
   },
-  {
-    id: "core-logo-tee",
-    handle: "core-logo-tee",
-    title: "Core Logo Tee",
-    price_ngn: 45000,
-    details:
-      "Heavyweight cotton, oversized fit, minimal UNDERATED branding across chest with woven hem label.",
-    images: ["/graphic-tee.jpg"],
-    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
-    collection: "tees",
-  },
-  {
-    id: "cargo-pants",
-    handle: "cargo-pants",
-    title: "Cargo Pants",
-    price_ngn: 65000,
-    details:
-      "Relaxed cargo cut with six modular pockets, durable tactical twill, adjustable ankle cinch cords.",
-    images: ["/editorial-streetwear.jpg"],
-    sizes: { XS: 5, S: 5, M: 5, L: 5, XL: 5, XXL: 0 },
-    collection: "bottoms",
-  },
 ];
 
 // In-memory catalog cache for lightning-fast sub-millisecond responses
 let memoryCatalog: Product[] | null = null;
 let lastCacheTime = 0;
-const CACHE_TTL_MS = 60 * 1000; // 60 seconds
+const CACHE_TTL_MS = 60 * 1000;
 
 async function fetchFromSupabaseWithTimeout(): Promise<Product[] | null> {
   const timeoutPromise = new Promise<null>((resolve) =>
@@ -175,10 +207,6 @@ export async function getProducts(collection: string, page = 1) {
 
     if (!isAll && normCol !== "new") {
       filtered = all.filter((p) => p.collection === normCol);
-    } else if (normCol === "new") {
-      filtered = all.filter(
-        (p) => p.collection === "tees" || p.collection === "new"
-      );
     }
 
     const start = (page - 1) * PER_PAGE;

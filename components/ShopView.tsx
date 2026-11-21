@@ -7,10 +7,10 @@ import type { Product } from "@/lib/products";
 
 const CATEGORIES = [
   { label: "ALL", handle: "all" },
-  { label: "NEW", handle: "new" },
   { label: "TEES", handle: "tees" },
+  { label: "JERSEYS", handle: "jerseys" },
+  { label: "LONGSLEEVES", handle: "longsleeves" },
   { label: "HOODIES", handle: "hoodies" },
-  { label: "BOTTOMS", handle: "bottoms" },
 ];
 
 export default function ShopView({
@@ -24,7 +24,6 @@ export default function ShopView({
   hasNext: boolean;
   page: number;
 }) {
-  // View mode: "grid" (4 columns on desktop) vs "list" (2 columns / large view)
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   useEffect(() => {
@@ -56,6 +55,7 @@ export default function ShopView({
             <Link
               key={cat.handle}
               href={`/collections/${cat.handle}`}
+              prefetch={true}
               className={`shrink-0 rounded-full border px-4 py-1.5 text-[11px] font-bold tracking-widest transition-all ${
                 isActive
                   ? "border-white bg-white text-black"

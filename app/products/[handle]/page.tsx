@@ -4,7 +4,6 @@ import { getProduct, DEFAULT_PRODUCTS } from "@/lib/products";
 
 export const revalidate = 120;
 
-// Pre-render product pages statically for instant zero-lag clicks
 export function generateStaticParams() {
   return DEFAULT_PRODUCTS.map((p) => ({
     handle: p.handle,
