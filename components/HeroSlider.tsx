@@ -13,7 +13,9 @@ const DEFAULT_SLIDES: Slide[] = [
   { src: "/slide-2.webp", alt: "UNDERATED Casual Male" },
   { src: "/slide-3.webp", alt: "UNDERATED Casual Couple" },
   { src: "/slide-4.webp", alt: "UNDERATED Sweater Male" },
-  { src: "/slide-5.webp", alt: "UNDERATED Tight Female" },
+  { src: "/slide-6.webp", alt: "UNDERATED Comic Burst Tee Male" },
+  { src: "/slide-7.webp", alt: "UNDERATED Camo Black Tee Male" },
+  { src: "/slide-8.webp", alt: "UNDERATED Pink Camo White Tee Male" },
 ];
 
 export default function HeroSlider({

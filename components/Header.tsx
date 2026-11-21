@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useCart } from "./CartProvider";
 
 const LINKS: [string, string][] = [
   ["HOME", "/"],
@@ -15,6 +16,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const path = usePathname();
   const home = path === "/";
+  const cart = useCart();
 
   useEffect(() => setOpen(false), [path]);
   useEffect(() => {
@@ -28,11 +30,11 @@ export default function Header() {
 
   return (
     <>
-      {/* ── Header: hamburger only on homepage, hamburger + wordmark on other pages ── */}
+      {/* ── Header: hamburger on left, wordmark center, cart button on right ── */}
       <header
         className={`${
           home ? "absolute inset-x-0 top-0" : "relative"
-        } z-30 flex h-16 items-center px-5 md:h-20 md:px-10`}
+        } z-30 flex h-16 items-center justify-between px-5 md:h-20 md:px-10`}
       >
         {/* Hamburger */}
         <button
@@ -54,6 +56,18 @@ export default function Header() {
             UNDERATED
           </Link>
         )}
+
+        {/* Cart Trigger */}
+        <button
+          aria-label="Open cart"
+          onClick={() => cart?.setOpen(true)}
+          className="flex items-center gap-2 text-xs font-bold tracking-wider hover:text-red transition-colors"
+        >
+          <span className="hidden sm:inline">CART</span>
+          <span className="flex h-6 w-6 items-center justify-center rounded-full border border-line bg-black text-[10px] font-bold text-white transition-colors hover:border-white">
+            {cart?.count ?? 0}
+          </span>
+        </button>
       </header>
 
       {/* ── Full-screen nav overlay ── */}
@@ -62,24 +76,29 @@ export default function Header() {
           className="fixed inset-0 z-50 overflow-y-auto bg-bg px-5 pt-6 md:px-12"
           aria-label="Main"
         >
-          <button
-            aria-label="Close menu"
-            onClick={() => setOpen(false)}
-            className="mb-10 h-11 w-11 text-3xl leading-none"
-          >
-            ×
-          </button>
-          <ul className="space-y-3">
+          <div className="flex justify-between items-center mb-10">
+            <button
+              aria-label="Close menu"
+              onClick={() => setOpen(false)}
+              className="h-11 w-11 text-3xl leading-none"
+            >
+              ×
+            </button>
+            <span className="text-xs font-bold tracking-[.2em] text-mute">
+              NAVIGATION
+            </span>
+          </div>
+          <ul className="space-y-4">
             {LINKS.map(([l, h], i) => (
               <li key={l}>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                   <span className="text-[11px] font-bold text-red">
                     0{i + 1}
                   </span>
                   <Link
                     href={h}
                     onClick={() => setOpen(false)}
-                    className={`text-[40px] font-bold leading-none tracking-tight md:text-6xl ${
+                    className={`text-[36px] font-bold leading-none tracking-tight sm:text-[44px] md:text-6xl hover:text-red transition-colors ${
                       path === h ? "text-red" : ""
                     }`}
                   >
