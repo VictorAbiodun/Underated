@@ -30,6 +30,13 @@ export default function Header() {
 
   return (
     <>
+      {/* ── Background invisible prefetcher so SHOP is cached before user even clicks ── */}
+      <div aria-hidden="true" className="hidden">
+        <Link href="/collections/all" prefetch={true}>
+          shop
+        </Link>
+      </div>
+
       {/* ── Header: hamburger on left, wordmark center, cart button on right ── */}
       <header
         className={`${
@@ -51,6 +58,7 @@ export default function Header() {
         {!home && (
           <Link
             href="/"
+            prefetch={true}
             className="absolute left-1/2 -translate-x-1/2 text-lg font-extrabold tracking-[.18em] md:text-2xl"
           >
             UNDERATED
@@ -80,7 +88,7 @@ export default function Header() {
             <button
               aria-label="Close menu"
               onClick={() => setOpen(false)}
-              className="h-11 w-11 text-3xl leading-none"
+              className="h-11 w-11 text-3xl leading-none hover:text-red transition-colors"
             >
               ×
             </button>
@@ -97,6 +105,7 @@ export default function Header() {
                   </span>
                   <Link
                     href={h}
+                    prefetch={true}
                     onClick={() => setOpen(false)}
                     className={`text-[36px] font-bold leading-none tracking-tight sm:text-[44px] md:text-6xl hover:text-red transition-colors ${
                       path === h ? "text-red" : ""

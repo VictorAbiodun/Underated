@@ -22,7 +22,7 @@ export const naira = (n: number) =>
 
 /**
  * Curated catalog of all brand pieces.
- * Used as source of truth and fallback if remote DB is missing any recent pieces.
+ * Used as source of truth and instant fallback so requests are never blocked.
  */
 export const DEFAULT_PRODUCTS: Product[] = [
   {
@@ -104,62 +104,90 @@ export const DEFAULT_PRODUCTS: Product[] = [
   },
 ];
 
-export async function getProducts(collection: string, page = 1) {
-  const normCol = collection.toLowerCase();
-  const isAll = normCol === "all" || normCol === "frontpage";
+// In-memory catalog cache for lightning-fast sub-millisecond responses
+let memoryCatalog: Product[] | null = null;
+let lastCacheTime = 0;
+const CACHE_TTL_MS = 60 * 1000; // 60 seconds
 
-  try {
-    let q = supabase
-      .from("products")
-      .select("*", { count: "exact" })
-      .order("created_at", { ascending: false });
+async function fetchFromSupabaseWithTimeout(): Promise<Product[] | null> {
+  const timeoutPromise = new Promise<null>((resolve) =>
+    setTimeout(() => resolve(null), 800)
+  );
 
-    if (!isAll && normCol !== "new") {
-      q = q.eq("collection", normCol);
-    }
+  const queryPromise = (async () => {
+    try {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-    const { data, count, error } = await q;
+      if (error || !data) return null;
 
-    let list: Product[] = [];
-    if (!error && data && data.length > 0) {
-      list = data.map((item) => ({
+      return data.map((item) => ({
         ...item,
-        // Ensure image fallback if DB has empty images array
         images:
           item.images && item.images.length > 0
             ? item.images
             : DEFAULT_PRODUCTS.find((d) => d.handle === item.handle)?.images || [
                 "/editorial-streetwear.jpg",
               ],
-      }));
+      })) as Product[];
+    } catch {
+      return null;
     }
+  })();
 
-    // Merge default products for any handles not in DB
-    for (const def of DEFAULT_PRODUCTS) {
-      if (!list.some((p) => p.handle === def.handle)) {
-        if (
-          isAll ||
-          (normCol === "new" && def.collection === "tees") ||
-          def.collection === normCol
-        ) {
-          list.push(def);
-        }
-      }
+  return Promise.race([queryPromise, timeoutPromise]);
+}
+
+async function getAllProductsMerged(): Promise<Product[]> {
+  const now = Date.now();
+  if (memoryCatalog && now - lastCacheTime < CACHE_TTL_MS) {
+    return memoryCatalog;
+  }
+
+  const remote = await fetchFromSupabaseWithTimeout();
+  let merged: Product[] = [];
+
+  if (remote && remote.length > 0) {
+    merged = [...remote];
+  }
+
+  // Complement any missing default products
+  for (const def of DEFAULT_PRODUCTS) {
+    if (!merged.some((p) => p.handle === def.handle)) {
+      merged.push(def);
     }
+  }
 
-    // Filter by category if requested
+  memoryCatalog = merged;
+  lastCacheTime = now;
+  return merged;
+}
+
+export async function getProducts(collection: string, page = 1) {
+  const normCol = collection.toLowerCase();
+  const isAll = normCol === "all" || normCol === "frontpage";
+
+  try {
+    const all = await getAllProductsMerged();
+    let filtered = all;
+
     if (!isAll && normCol !== "new") {
-      list = list.filter((p) => p.collection === normCol);
+      filtered = all.filter((p) => p.collection === normCol);
+    } else if (normCol === "new") {
+      filtered = all.filter(
+        (p) => p.collection === "tees" || p.collection === "new"
+      );
     }
 
     const start = (page - 1) * PER_PAGE;
-    const paginated = list.slice(start, start + PER_PAGE);
-    const hasNext = list.length > page * PER_PAGE;
+    const paginated = filtered.slice(start, start + PER_PAGE);
+    const hasNext = filtered.length > page * PER_PAGE;
 
     return { products: paginated, hasNext };
   } catch (err) {
     console.error("getProducts error:", err);
-    // Graceful fallback to static products
     let list = DEFAULT_PRODUCTS;
     if (!isAll && normCol !== "new") {
       list = list.filter((p) => p.collection === normCol);
@@ -170,28 +198,13 @@ export async function getProducts(collection: string, page = 1) {
 
 export async function getProduct(handle: string) {
   try {
-    const { data, error } = await supabase
-      .from("products")
-      .select("*")
-      .eq("handle", handle)
-      .maybeSingle();
-
-    if (!error && data) {
-      return {
-        ...data,
-        images:
-          data.images && data.images.length > 0
-            ? data.images
-            : DEFAULT_PRODUCTS.find((d) => d.handle === handle)?.images || [
-                "/editorial-streetwear.jpg",
-              ],
-      } as Product;
-    }
+    const all = await getAllProductsMerged();
+    const hit = all.find((p) => p.handle === handle);
+    if (hit) return hit;
   } catch (err) {
     console.error("getProduct error:", err);
   }
 
-  // Fallback to static catalog
   return DEFAULT_PRODUCTS.find((p) => p.handle === handle) || null;
 }
 
@@ -202,13 +215,9 @@ export async function getEditorial() {
       .select("url")
       .order("sort");
 
-    if (error) {
-      console.error("getEditorial error:", error.message);
-      return [];
-    }
+    if (error) return [];
     return (data ?? []).map((r) => r.url as string);
-  } catch (err) {
-    console.error("getEditorial error:", err);
+  } catch {
     return [];
   }
 }

@@ -1,7 +1,19 @@
 import ShopView from "@/components/ShopView";
 import { getProducts } from "@/lib/products";
 
-export const revalidate = 60;
+export const revalidate = 120;
+
+// Pre-render all common collection paths at build time for instant zero-latency loading
+export function generateStaticParams() {
+  return [
+    { handle: "all" },
+    { handle: "frontpage" },
+    { handle: "new" },
+    { handle: "tees" },
+    { handle: "hoodies" },
+    { handle: "bottoms" },
+  ];
+}
 
 export async function generateMetadata({
   params,
