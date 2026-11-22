@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export type Slide = {
   src: string;
@@ -72,8 +73,8 @@ export default function HeroSlider({
       {/* ── Soft dark vignette for logo contrast ── */}
       <div className="absolute inset-0 z-20 pointer-events-none bg-black/25" />
 
-      {/* ── UNDERATED graffiti logo centered ── */}
-      <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
+      {/* ── UNDERATED graffiti logo centered + SHOP CTA ── */}
+      <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-6 px-4">
         <Image
           src="/underated-logo.png"
           alt="UNDERATED"
@@ -81,8 +82,14 @@ export default function HeroSlider({
           height={300}
           priority
           unoptimized
-          className="w-[70vw] max-w-[500px] sm:w-[55vw] md:w-[40vw] md:max-w-[550px] h-auto drop-shadow-[0_4px_30px_rgba(0,0,0,0.6)]"
+          className="w-[70vw] max-w-[500px] sm:w-[55vw] md:w-[40vw] md:max-w-[550px] h-auto drop-shadow-[0_4px_30px_rgba(0,0,0,0.6)] pointer-events-none select-none"
         />
+        <Link
+          href="/collections/all"
+          className="group relative inline-flex items-center justify-center px-8 py-3.5 border border-white/80 bg-black/50 backdrop-blur-md text-[11px] font-bold tracking-[0.3em] uppercase text-white transition-all duration-300 hover:bg-white hover:text-black hover:border-white shadow-[0_4px_24px_rgba(0,0,0,0.5)] active:scale-95"
+        >
+          <span>EXPLORE DROP</span>
+        </Link>
       </div>
     </section>
   );
