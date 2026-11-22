@@ -21,11 +21,11 @@ export default function ProductView({ p }: { p: Product }) {
   return (
     <div className="grid gap-8 px-5 pb-8 md:grid-cols-[1fr_480px] md:gap-24 md:px-16">
       <div className="flex flex-col gap-3 md:flex-row-reverse md:gap-4">
-        <div className="relative aspect-square flex-1 bg-ph"><Pic src={p.images[img]} alt={p.title} sizes="(min-width:768px) 50vw, 100vw" priority /></div>
+        <div className="relative aspect-[4/5] flex-1 bg-transparent"><Pic src={p.images[img]} alt={p.title} sizes="(min-width:768px) 50vw, 100vw" priority contain /></div>
         <div className="flex gap-3 md:w-24 md:flex-col">
           {p.images.map((s, i) => (
-            <button key={s} onClick={() => setImg(i)} aria-label={`Image ${i + 1}`} className={`relative h-1 w-10 md:aspect-square md:h-auto md:w-full ${i === img ? "bg-red md:outline md:outline-2 md:outline-red" : "bg-mute md:bg-ph"}`}>
-              <span className="hidden md:block"><Pic src={s} alt="" sizes="96px" /></span>
+            <button key={s} onClick={() => setImg(i)} aria-label={`Image ${i + 1}`} className={`relative h-1 w-10 md:aspect-[4/5] md:h-auto md:w-full ${i === img ? "bg-red md:outline md:outline-2 md:outline-red" : "bg-mute md:bg-transparent"}`}>
+              <span className="hidden md:block"><Pic src={s} alt="" sizes="96px" contain /></span>
             </button>
           ))}
         </div>

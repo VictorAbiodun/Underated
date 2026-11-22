@@ -15,23 +15,23 @@ export default function ProductCard({ p }: { p: Product }) {
 
   return (
     <article className="group isolate relative flex flex-col gap-2.5 text-start">
-      {/* ── 4:5 Portrait Studio Image Container (bolapsd style) ── */}
+      {/* ── 4:5 Portrait Studio Image Container ── */}
       <Link
         href={`/products/${p.handle}`}
-        className="relative block aspect-[4/5] w-full overflow-hidden bg-white transition-colors rounded-[2px]"
+        className="relative block aspect-[4/5] w-full overflow-hidden bg-transparent transition-colors rounded-[2px]"
         aria-label={p.title}
       >
-        {/* Front Image */}
+        {/* Front Image (Transparent Cutout) */}
         <Image
           src={frontImage}
           alt={p.title}
           fill
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
           unoptimized
-          className={`object-cover object-center transition-all duration-500 ${
+          className={`object-contain object-center transition-all duration-500 ${
             backImage
               ? "group-hover:opacity-0"
-              : "group-hover:scale-[1.05]"
+              : "group-hover:scale-105"
           }`}
         />
 
