@@ -19,18 +19,31 @@ export default function ProductView({ p }: { p: Product }) {
   };
   const share = async () => { const url = location.href; try { navigator.share ? await navigator.share({ title: p.title, url }) : await navigator.clipboard.writeText(url); } catch {} };
   return (
-    <div className="grid gap-8 px-5 pb-8 md:grid-cols-[1fr_480px] md:gap-24 md:px-16">
-      <div className="flex flex-col gap-3 md:flex-row-reverse md:gap-4">
-        <div className="relative aspect-[4/5] flex-1 bg-transparent"><Pic src={p.images[img]} alt={p.title} sizes="(min-width:768px) 50vw, 100vw" priority contain /></div>
-        <div className="flex gap-3 md:w-24 md:flex-col">
+    <div className="grid gap-8 px-5 pb-8 md:grid-cols-[1fr_480px] lg:grid-cols-[1fr_520px] md:gap-16 lg:gap-24 md:px-12 lg:px-20 md:py-8 max-w-[1720px] mx-auto">
+      <div className="flex flex-col gap-3 md:flex-row-reverse md:gap-5">
+        <div className="relative aspect-[4/5] flex-1 bg-transparent md:bg-[#191919]/60 md:p-8 md:rounded-sm">
+          <Pic src={p.images[img]} alt={p.title} sizes="(min-width:768px) 50vw, 100vw" priority contain />
+        </div>
+        <div className="flex gap-3 md:w-24 md:flex-col md:gap-3">
           {p.images.map((s, i) => (
-            <button key={s} onClick={() => setImg(i)} aria-label={`Image ${i + 1}`} className={`relative h-1 w-10 md:aspect-[4/5] md:h-auto md:w-full ${i === img ? "bg-red md:outline md:outline-2 md:outline-red" : "bg-mute md:bg-transparent"}`}>
-              <span className="hidden md:block"><Pic src={s} alt="" sizes="96px" contain /></span>
+            <button
+              key={s}
+              onClick={() => setImg(i)}
+              aria-label={`Image ${i + 1}`}
+              className={`relative h-1 w-10 md:aspect-[4/5] md:h-auto md:w-full md:rounded-sm md:overflow-hidden md:p-1.5 transition-all ${
+                i === img
+                  ? "bg-red md:bg-[#202020] md:outline md:outline-2 md:outline-white"
+                  : "bg-mute md:bg-[#191919]/60 md:opacity-70 hover:md:opacity-100"
+              }`}
+            >
+              <span className="hidden md:block">
+                <Pic src={s} alt="" sizes="96px" contain />
+              </span>
             </button>
           ))}
         </div>
       </div>
-      <div className="md:sticky md:top-8 md:self-start">
+      <div className="md:sticky md:top-24 md:self-start">
         <h1 className="mb-6 leading-[.95] tracking-tight">{[brand, ...rest.slice(0, 2), rest.slice(2).join(" ")].filter(Boolean).map((w, i) => <span key={i} className="block font-extrabold" style={{ fontSize: `${sizeOf[Math.min(i, 2)] * 1.2}px` }}>{w}</span>)}</h1>
         <p className="text-2xl font-bold">{naira(p.price_ngn)}</p>
         <p className="mb-6 mt-1 text-[13px] text-mute">Pay in 4 installments</p>

@@ -18,7 +18,7 @@ export default function ProductCard({ p }: { p: Product }) {
       {/* ── 4:5 Portrait Studio Image Container ── */}
       <Link
         href={`/products/${p.handle}`}
-        className="relative block aspect-[4/5] w-full overflow-hidden bg-transparent transition-colors rounded-[2px]"
+        className="relative block aspect-[4/5] w-full overflow-hidden bg-transparent md:bg-[#191919]/60 md:hover:bg-[#202020]/90 md:p-3 transition-all duration-300 rounded-[2px]"
         aria-label={p.title}
       >
         {/* Front Image (Transparent Cutout) */}

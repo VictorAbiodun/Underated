@@ -46,9 +46,9 @@ export default function ShopView({
   const titleDisplay = activeCategory.toUpperCase();
 
   return (
-    <div className="min-h-screen px-4 pb-16 pt-2 sm:px-6 md:px-10 lg:px-12">
+    <div className="min-h-screen px-4 pb-16 pt-2 sm:px-6 md:px-10 lg:px-16 md:pt-6 md:pb-24 max-w-[1720px] mx-auto">
       {/* ── Category Navigation Chips / Filter Bar (bolapsd style) ── */}
-      <div className="scrollbar-none -mx-4 mb-6 flex items-center gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+      <div className="scrollbar-none -mx-4 mb-6 flex items-center gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0 md:mb-8 md:gap-3">
         {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.handle;
           return (
@@ -159,8 +159,8 @@ export default function ShopView({
         <div
           className={
             viewMode === "grid"
-              ? "grid grid-cols-2 gap-2.5 sm:gap-3.5 md:grid-cols-3 md:gap-4 lg:grid-cols-4"
-              : "mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6"
+              ? "grid grid-cols-2 gap-2.5 sm:gap-3.5 md:grid-cols-3 md:gap-x-6 md:gap-y-10 lg:grid-cols-4 lg:gap-x-7 lg:gap-y-12"
+              : "mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:gap-x-10 md:gap-y-12"
           }
         >
           {products.map((p) => (
