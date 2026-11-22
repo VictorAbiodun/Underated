@@ -45,8 +45,25 @@ export default function ProductView({ p }: { p: Product }) {
         <button onClick={onAdd} className="w-full bg-white py-5 text-xs font-bold tracking-[.25em] text-black transition-colors hover:bg-red hover:text-white">{added ? "ADDED" : "ADD TO CART"}</button>
         <button onClick={share} className="mt-4 text-xs font-medium text-mute underline">SHARE</button>
         <div className="mt-6">
-          {[["DETAILS", p.details ?? ""], ["SHIPPING", "Shipping details coming soon."], ["RETURNS", "Return policy coming soon."]].map(([t, b], i) => (
-            <details key={t} open={i === 0} className="group border-t border-line py-5"><summary className="flex cursor-pointer list-none justify-between text-[13px] font-bold tracking-[.15em]">{t}<span className="group-open:hidden">+</span><span className="hidden group-open:inline">−</span></summary><p className="mt-3 text-[13px] normal-case text-mute">{b}</p></details>
+          {[
+            ["DETAILS", p.details ?? "Heavyweight combed cotton. Oversized boxy streetwear drape."],
+            [
+              "SHIPPING",
+              "Lagos delivery: 24–48 hours (₦3,000). Nationwide delivery across Nigeria: 3–5 business days (₦5,000). Dispatch notifications sent via SMS and email.",
+            ],
+            [
+              "RETURNS",
+              "7-day exchange window on unworn, unwashed items in original packaging with tags attached. Size swaps subject to availability.",
+            ],
+          ].map(([t, b], i) => (
+            <details key={t} open={i === 0} className="group border-t border-line py-5">
+              <summary className="flex cursor-pointer list-none justify-between text-[13px] font-bold tracking-[.15em]">
+                {t}
+                <span className="group-open:hidden">+</span>
+                <span className="hidden group-open:inline">−</span>
+              </summary>
+              <p className="mt-3 text-[13px] normal-case text-mute leading-relaxed">{b}</p>
+            </details>
           ))}
         </div>
       </div>

@@ -1,7 +1,71 @@
--- SQL Migration to insert the 8 headline items into Supabase
+-- =========================================================================
+-- UNDERATED FULL DATABASE SYNC SCRIPT
 -- Paste and run this script in your Supabase SQL Editor:
 -- https://supabase.com/dashboard/project/hmxltymfcrdhpgnenwhk/sql
+-- =========================================================================
 
+-- 1. Ensure products table exists and has proper schema
+create table if not exists products (
+  id uuid primary key default gen_random_uuid(),
+  handle text unique not null,
+  title text not null,
+  price_ngn integer not null,
+  details text,
+  collection text not null default 'tees',
+  images text[] not null default '{}',
+  sizes jsonb not null default '{"XS":5,"S":5,"M":5,"L":5,"XL":5,"XXL":0}',
+  created_at timestamptz not null default now()
+);
+
+-- 2. Ensure orders table exists and has all required fields
+create table if not exists orders (
+  id uuid primary key default gen_random_uuid(),
+  reference text unique not null,
+  email text not null,
+  name text not null,
+  phone text not null,
+  address text not null,
+  state text not null default 'lagos',
+  shipping_ngn integer not null default 3000,
+  items jsonb not null,
+  total_ngn integer not null,
+  status text not null default 'pending',
+  created_at timestamptz not null default now()
+);
+
+-- 3. Enable Row Level Security (RLS)
+alter table products enable row level security;
+alter table orders enable row level security;
+
+-- Drop old policies to avoid duplicates
+drop policy if exists "public read products" on products;
+drop policy if exists "allow order creation" on orders;
+drop policy if exists "allow read orders by service" on orders;
+
+-- Public can read all products
+create policy "public read products" on products for select using (true);
+
+-- Allow server/anon to create orders during checkout
+create policy "allow order creation" on orders for insert with check (true);
+
+-- Allow reading orders (for admin / status check)
+create policy "allow read orders by service" on orders for select using (true);
+
+-- 4. Function to safely decrement stock when an order is paid
+create or replace function decrement_stock(p_handle text, p_size text, p_qty int)
+returns void as $$
+begin
+  update products
+  set sizes = jsonb_set(
+    sizes,
+    array[p_size],
+    to_jsonb(greatest(0, coalesce((sizes->>p_size)::int, 0) - p_qty))
+  )
+  where handle = p_handle;
+end;
+$$ language plpgsql security definer;
+
+-- 5. Insert all 8 headline collection drop pieces
 insert into products (handle, title, price_ngn, details, collection, images, sizes) values
 (
   'underated-timeless-blue',
