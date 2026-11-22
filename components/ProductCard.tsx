@@ -28,11 +28,10 @@ export default function ProductCard({ p }: { p: Product }) {
           fill
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
           unoptimized
-          className={`object-contain object-center transition-all duration-500 ${
-            backImage
+          className={`object-contain object-center transition-all duration-500 ${backImage
               ? "group-hover:opacity-0"
               : "group-hover:scale-105"
-          }`}
+            }`}
         />
 
         {/* Back / Alternate Model View (Hover Swap) */}
