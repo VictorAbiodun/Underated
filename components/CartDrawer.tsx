@@ -9,8 +9,18 @@ export default function CartDrawer() {
   useEffect(() => { const f = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false); addEventListener("keydown", f); return () => removeEventListener("keydown", f); }, [setOpen]);
   return (
     <>
-      {open && <div className="fixed inset-0 z-[60] bg-black/60" onClick={() => setOpen(false)} />}
-      <aside role="dialog" aria-label="Cart" aria-hidden={!open} inert={!open} className={`fixed right-0 top-0 z-[70] flex h-full w-full max-w-md flex-col border-l border-line bg-bg transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}>
+      {open && <div className="fixed inset-0 z-[60] bg-black/60 transition-opacity duration-300" onClick={() => setOpen(false)} />}
+      <aside
+        role="dialog"
+        aria-label="Cart"
+        aria-hidden={!open}
+        inert={!open}
+        className={`fixed right-0 top-0 z-[70] flex h-full w-full max-w-md flex-col border-l border-line bg-bg transition-all duration-300 ease-in-out ${
+          open
+            ? "translate-x-0 opacity-100 visible"
+            : "translate-x-full opacity-0 invisible pointer-events-none"
+        }`}
+      >
         <div className="flex items-center justify-between px-5 py-5"><h2 className="text-xs font-bold tracking-[.2em]">CART ({count})</h2><button aria-label="Close cart" onClick={() => setOpen(false)} className="h-11 w-11 text-3xl leading-none">×</button></div>
         <div className="flex-1 overflow-y-auto px-5">
           {items.length === 0 && <div className="py-16 text-center"><p className="mb-6 text-xs text-mute">Your cart is empty.</p><Link href="/collections/new" onClick={() => setOpen(false)} className="text-xs font-bold tracking-[.25em] underline">SHOP NEW</Link></div>}

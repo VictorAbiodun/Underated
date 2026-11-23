@@ -46,9 +46,9 @@ export default function ShopView({
   const titleDisplay = activeCategory.toUpperCase();
 
   return (
-    <div className="min-h-screen px-4 pb-16 pt-2 sm:px-6 md:px-10 lg:px-16 md:pt-6 md:pb-24 max-w-[1720px] mx-auto">
+    <div className="min-h-screen px-3.5 pb-16 pt-1 sm:px-6 md:px-10 lg:px-16 md:pt-6 md:pb-24 max-w-[1720px] mx-auto w-full overflow-hidden">
       {/* ── Category Navigation Chips / Filter Bar (bolapsd style) ── */}
-      <div className="scrollbar-none -mx-4 mb-6 flex items-center gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0 md:mb-8 md:gap-3">
+      <div className="scrollbar-none mb-4 flex items-center gap-2 overflow-x-auto pb-1 md:mb-8 md:gap-3">
         {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.handle;
           return (
@@ -56,7 +56,7 @@ export default function ShopView({
               key={cat.handle}
               href={`/collections/${cat.handle}`}
               prefetch={true}
-              className={`shrink-0 rounded-full border px-4 py-1.5 text-[11px] font-bold tracking-widest transition-all ${
+              className={`shrink-0 rounded-full border px-3.5 py-1 text-[10px] font-bold tracking-widest sm:px-4 sm:py-1.5 sm:text-[11px] transition-all ${
                 isActive
                   ? "border-white bg-white text-black"
                   : "border-line bg-transparent text-mute hover:border-white hover:text-white"
@@ -69,12 +69,12 @@ export default function ShopView({
       </div>
 
       {/* ── Collection Title & View Switcher Row ── */}
-      <div className="mb-6 flex items-end justify-between border-b border-line pb-4">
-        <div className="flex items-baseline gap-3">
-          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
+      <div className="mb-4 flex items-end justify-between border-b border-line pb-3 sm:mb-6 sm:pb-4">
+        <div className="flex items-baseline gap-2.5 sm:gap-3">
+          <h1 className="text-2xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
             {titleDisplay}
           </h1>
-          <span className="text-[11px] font-bold tracking-[.2em] text-red">
+          <span className="text-[10px] sm:text-[11px] font-bold tracking-[.2em] text-red">
             {products.length} {products.length === 1 ? "ITEM" : "ITEMS"}
           </span>
         </div>
@@ -91,7 +91,7 @@ export default function ShopView({
             onClick={() => handleToggleView("grid")}
             aria-pressed={viewMode === "grid"}
             aria-label="4-column grid view"
-            className={`flex h-9 w-9 items-center justify-center rounded border transition-colors ${
+            className={`flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded border transition-colors ${
               viewMode === "grid"
                 ? "border-white bg-white text-black"
                 : "border-line text-mute hover:border-white hover:text-white"
@@ -159,8 +159,8 @@ export default function ShopView({
         <div
           className={
             viewMode === "grid"
-              ? "grid grid-cols-2 gap-2.5 sm:gap-3.5 md:grid-cols-3 md:gap-x-6 md:gap-y-10 lg:grid-cols-4 lg:gap-x-7 lg:gap-y-12"
-              : "mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:gap-x-10 md:gap-y-12"
+              ? "grid grid-cols-2 gap-2 sm:gap-3.5 md:grid-cols-3 md:gap-x-6 md:gap-y-10 lg:grid-cols-4 lg:gap-x-7 lg:gap-y-12"
+              : "mx-auto grid max-w-4xl grid-cols-1 gap-3 sm:grid-cols-2 md:gap-x-10 md:gap-y-12"
           }
         >
           {products.map((p) => (
