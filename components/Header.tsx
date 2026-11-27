@@ -39,9 +39,9 @@ export default function Header() {
 
       {/* ── Header: mobile (hamburger + logo + cart) vs laptop (bolapsd 3-col nav) ── */}
       <header
-        className={`${
-          home ? "absolute inset-x-0 top-0" : "relative"
-        } z-30 h-16 md:h-20 w-full px-5 md:px-10 lg:px-12 transition-colors`}
+        className={`absolute inset-x-0 top-0 z-30 h-16 md:h-20 w-full px-5 md:px-10 lg:px-12 transition-colors ${
+          !home ? "md:relative md:inset-auto" : ""
+        }`}
       >
         <div className="mx-auto flex h-full max-w-[1720px] items-center justify-between">
           {/* Mobile Hamburger (Strictly hidden on md and above) */}
@@ -166,6 +166,9 @@ export default function Header() {
           </div>
         </div>
       </header>
+
+      {/* Mobile spacer: keeps page content below the now-transparent header on non-home pages */}
+      {!home && <div className="h-16 md:hidden" aria-hidden="true" />}
 
       {/* ── Full-screen nav overlay ── */}
       {open && (

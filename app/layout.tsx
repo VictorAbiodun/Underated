@@ -5,6 +5,7 @@ import CartProvider from "@/components/CartProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
+import CartToast from "@/components/CartToast";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -34,6 +35,7 @@ export default function RootLayout({
           {children}
           <Footer />
           <CartDrawer />
+          <CartToast />
         </CartProvider>
       </body>
     </html>
