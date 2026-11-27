@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import Pic from "./Pic";
 import { useCart } from "./CartProvider";
 import { naira, type Product } from "@/lib/products";
@@ -20,6 +21,16 @@ export default function ProductView({ p }: { p: Product }) {
   const share = async () => { const url = location.href; try { navigator.share ? await navigator.share({ title: p.title, url }) : await navigator.clipboard.writeText(url); } catch {} };
   return (
     <div className="grid gap-6 px-4 pb-8 md:grid-cols-[1fr_480px] lg:grid-cols-[1fr_520px] md:gap-16 lg:gap-24 md:px-12 lg:px-20 md:py-8 max-w-[1720px] mx-auto w-full overflow-hidden">
+      {/* Back to shop */}
+      <Link
+        href="/collections/all"
+        className="col-span-full flex items-center gap-1.5 text-xs font-bold tracking-[.15em] text-mute hover:text-white transition-colors w-fit"
+      >
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+        BACK TO SHOP
+      </Link>
       <div className="flex flex-col gap-3 md:flex-row-reverse md:gap-5">
         <div className="relative aspect-[4/5] w-full flex-1 bg-transparent md:bg-[#191919]/60 md:p-8 md:rounded-sm">
           <Pic src={p.images[img]} alt={p.title} sizes="(min-width:768px) 50vw, 100vw" priority contain />
